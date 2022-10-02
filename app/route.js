@@ -1,9 +1,11 @@
-const { addItem, getAllItems, updateItemByItemId, deleteItem } = require('./controllers/item');
+const { addItem,seachItem, getAllItems, updateItemByItemId, deleteItem } = require('./controllers/item');
 
 class Routes {
   routeToController = (app) => {
     // Create a new item
     app.post('/add/item', addItem);
+      // Search a new item
+      app.post('/search/item', seachItem);
     // Retrieve all item
     app.get('/all/items', getAllItems);
     //delete item

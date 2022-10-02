@@ -20,6 +20,13 @@ class ItemService {
     }
 
     /**
+     * @description search required item
+     * @method seachItem is a model class method
+     */
+     search = (itemData, callback) => itemModel.searchItem(itemData, (error, data) => ((error) ? callback(error, null) : callback(null, data)))
+     
+    
+     /**
      * @description update a item by id
      * @method update is model class methodholds itemData
      * @param {*}itemData holds user input update data

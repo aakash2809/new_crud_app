@@ -39,7 +39,19 @@ class ItemModel {
             callback(error, null);
         }
     }
-
+    
+     /**
+     * @description filter for search item
+     * @param {*} callback is for service class holds error and user
+     */
+    searchItem = async (searchData, callback) => {
+        try{ let {title} = searchData;
+            let result = await Item.find({title: {$regex: title, $options: 'i'}})
+            callback(null, result);
+        }catch(error){
+            callback(error, null);
+        }
+    }
     /**
      * @description update a item
      * @param {*} itemtData

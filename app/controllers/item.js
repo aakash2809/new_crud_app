@@ -42,15 +42,18 @@ class ItemController {
         }
     }
  
-    /**
+     /**
      * @description find all item in database
-     * @method getItems is service class method
+     * @method searchItem is service class method
      * @param {*} req holds user input
      * @param {*} res sends responce with data coming from Database
      */
-     getAllItems = (req, res) => {
+    seachItem = (req, res) => {
         try {
-            itemService.getItems((error, data) => {
+            const itemData = {
+                title: req.body.title,
+            };
+            itemService.search(itemData,(error, data) => {
                 if (error) {
                     return res.status(500).send({
                         success: false,
@@ -80,13 +83,49 @@ class ItemController {
     }
 
     /**
+     * @description find all item in database
+     * @method getItems is service class method
+     * @param {*} req holds user input
+     * @param {*} res sends responce with data coming from Database
+     */
+     getAllItems = (req, res) => {
+        try {
+            itemService.getItems((error, data) => {
+                if (error) {
+                    return res.status(500).send({
+                        success: false,
+                        message: error.message,
+                    });
+                } if (data.length == 0) {
+                    console.log('item not found');
+                    return res.status(404).send({
+                        success: false,
+                        message: 'item not found',
+                    });
+                }
+                console.log('Successfully retrieved item !');
+                return res.status(200).send({
+                    success: true,
+                    message: 'Successfully search items !',
+                    data,
+                });
+            });
+        } catch (error) {
+            console.log('Some error occurred !');
+            res.status(500).send({
+                success: false,
+                message: `Some error occurred !${error}`,
+            });
+        }
+    }
+
+    /**
      * @description update item in database
      * @method update is service class method
      * @param res is used to send the response
      */
      updateItemByItemId = (req, res) => {
         try {
-            console.log('newdfdf')
             const itemData = {
                 itemId:req.body.itemId,
                 title: req.body.title,
